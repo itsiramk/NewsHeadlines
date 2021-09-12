@@ -14,7 +14,7 @@
     <string name="empty_field_error">Field can\'t be empty</string>
     <string name="valid_email_error">Please enter a valid email address</string>
     <string name="password_weak_error">Password too weak!</string>
-    <string name="login_failed">Login Failed !! Please check credentials.</string>
+    <string name="login_failed">Login Failed !!\nPlease check credentials.</string>
     <string name="alert">Alert!!</string>
     <string name="ok">OK</string>
 </resources>

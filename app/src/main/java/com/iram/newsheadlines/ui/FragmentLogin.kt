@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,6 +19,7 @@ import com.iram.newsheadlines.databinding.LayoutLoginBinding
 import com.iram.newsheadlines.utils.autoCleared
 import com.iram.newsheadlines.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.coroutineScope
 
 
 @AndroidEntryPoint
@@ -107,14 +108,18 @@ class FragmentLogin : Fragment(), TextWatcher {
         validateInputFields()
     }
 
-    fun showAlert(msg:String){
+    private fun showAlert(msg:String){
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        alertDialog.setTitle("Alert!!")
-        alertDialog.setMessage(msg)
-        alertDialog.setPositiveButton("OK") { dialog, which ->
-            dialog.cancel()
-        }
+        val inflater = requireActivity().layoutInflater
+        val dialogView:View = inflater.inflate(R.layout.layout_alert, null)
+        alertDialog.setView(dialogView);
+        val tvAlertMsg:TextView = dialogView.findViewById(R.id.tvAlertMessage)
+        val btnOk:Button = dialogView.findViewById(R.id.btnOk)
+        tvAlertMsg.text = msg
         val alert: AlertDialog = alertDialog.create()
+        btnOk.setOnClickListener {
+            alert.dismiss()
+        }
         alert.show()
     }
 }
