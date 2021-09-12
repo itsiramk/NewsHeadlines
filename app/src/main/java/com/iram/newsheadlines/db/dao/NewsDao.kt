@@ -11,7 +11,7 @@ import com.iram.newsheadlines.entity.News
 interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDetails(movieList: List<News>)
+    suspend fun insertDetails(newsList: List<News>)
 
     @Query("SELECT * FROM News")
     fun getNewsList(): LiveData<List<News>>

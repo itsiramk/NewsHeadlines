@@ -4,10 +4,12 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.iram.newsheadlines.BuildConfig
+import com.iram.newsheadlines.datastore.AppPrefsStorage
 import com.iram.newsheadlines.db.dao.NewsDao
 import com.iram.newsheadlines.network.iService
 import com.iram.newsheadlines.remote.ServerDataSource
 import com.iram.newsheadlines.repository.NewsRepository
+import com.iram.newsheadlines.viewmodel.LoginViewModel
 import com.iram.newsheadlinese.db.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -61,7 +63,12 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideTwitterDao(db: AppDatabase) = db.newsDao()
+    fun provideNewsDao(db: AppDatabase) = db.newsDao()
+
+    @Provides
+    fun provideContext(@ApplicationContext appContext: Context): Context{
+        return appContext
+    }
 
     @Singleton
     @Provides
@@ -69,4 +76,9 @@ class AppModule {
         serverDataSource: ServerDataSource,
         localDataSource: NewsDao
     ) = NewsRepository(localDataSource, serverDataSource)
+
+    @Singleton
+    @Provides
+    fun providesPreferenceStorage(
+        appPreferenceStorage: AppPrefsStorage)= LoginViewModel(appPreferenceStorage)
 }

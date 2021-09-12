@@ -15,5 +15,9 @@
     <fragment
         android:id="@+id/fragmentRegistration"
         android:name="com.iram.newsheadlines.ui.FragmentRegistration"
-        android:label="FragmentRegistration"/>
+        android:label="FragmentRegistration">
+        <action
+            android:id="@+id/action_fragmentRegistration_to_fragmentLogin"
+            app:destination="@id/fragmentLogin" />
+    </fragment>
 </navigation>

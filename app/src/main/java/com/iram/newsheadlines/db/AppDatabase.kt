@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.iram.newsheadlines.db.dao.Converters
 import com.iram.newsheadlines.db.dao.NewsDao
+import com.iram.newsheadlines.db.entity.Login
 import com.iram.newsheadlines.entity.News
 
 
@@ -28,7 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
 
         private fun buildDatabase(appContext: Context) =
-            Room.databaseBuilder(appContext, AppDatabase::class.java, "movies_db")
+            Room.databaseBuilder(appContext, AppDatabase::class.java, "news_db")
                 .fallbackToDestructiveMigration()
                 .build()
     }

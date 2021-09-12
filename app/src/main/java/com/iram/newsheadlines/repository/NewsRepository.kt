@@ -15,7 +15,7 @@ class NewsRepository @Inject constructor(
     private var serverDataSource: ServerDataSource
 ) {
 
-    fun getMoviesData() = fetchData(
+    fun getNewsData() = fetchData(
         databaseQuery = { newsDao.getNewsList() },
         networkCall = { serverDataSource.getNewsList() },
         saveCallResult = { it.sources?.let { it1 -> newsDao.insertDetails(it1) } }
