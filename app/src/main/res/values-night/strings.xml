@@ -17,4 +17,5 @@
     <string name="login_failed">Login Failed !!\nPlease check credentials.</string>
     <string name="alert">Alert!!</string>
     <string name="ok">OK</string>
+    <string name="noData">Unable to reach Server !!</string>
 </resources>

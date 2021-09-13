@@ -8,5 +8,5 @@ class ServerDataSource @Inject constructor(
     private val iService: iService
 ) : BaseDataSource() {
 
-    suspend fun getNewsList() = getResult { iService.getNewsTopHeadlines(BuildConfig.NEWS_API_KEY) }
+    suspend fun getNewsList() = getResult { iService.getNewsTopHeadlines("in",BuildConfig.NEWS_API_KEY) }
 }

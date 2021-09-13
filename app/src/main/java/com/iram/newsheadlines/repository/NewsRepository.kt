@@ -1,7 +1,10 @@
 package com.iram.newsheadlines.repository
 
+import android.graphics.Movie
+import androidx.lifecycle.LiveData
 import com.iram.newsheadlines.BuildConfig
 import com.iram.newsheadlines.db.dao.NewsDao
+import com.iram.newsheadlines.entity.News
 import com.iram.newsheadlines.model.NewsResult
 import com.iram.newsheadlines.remote.ServerDataSource
 import com.iram.newsheadlines.remote.fetchData
@@ -18,11 +21,10 @@ class NewsRepository @Inject constructor(
     fun getNewsData() = fetchData(
         databaseQuery = { newsDao.getNewsList() },
         networkCall = { serverDataSource.getNewsList() },
-        saveCallResult = { it.sources?.let { it1 -> newsDao.insertDetails(it1) } }
+        saveCallResult = { it.articles?.let { it1 -> newsDao.insertDetails(it1) } }
     )
 
-    suspend fun getNewsHeadlines(): Resource<NewsResult> {
-        return serverDataSource.getNewsList()
+    fun getNewsListByTitle(title:String): LiveData<News> {
+        return newsDao.getNewsListByTitle(title)
     }
-
 }

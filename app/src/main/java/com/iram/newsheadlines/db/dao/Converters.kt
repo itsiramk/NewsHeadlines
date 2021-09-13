@@ -1,27 +1,18 @@
 package com.iram.newsheadlines.db.dao
 
 import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.iram.newsheadlines.model.Sources
 
 
 class Converters {
     @TypeConverter
-    open fun gettingListFromString(genreIds: String): MutableList<Int> {
-        val list: MutableList<Int> = ArrayList()
-        val array = genreIds.split(",").toTypedArray()
-        for (s in array) {
-            if (!s.isEmpty()) {
-                list.add(s.toInt())
-            }
-        }
-        return list
+    fun fromString(value: String): Sources {
+        return Gson().fromJson(value, Sources::class.java)
     }
 
     @TypeConverter
-    fun writingStringFromList(list: List<Int>): String {
-        var genreIds = ""
-        for (i in list) {
-            genreIds += ",$i"
-        }
-        return genreIds
+    fun fromSources(source: Sources): String? {
+        return Gson().toJson(source)
     }
 }
