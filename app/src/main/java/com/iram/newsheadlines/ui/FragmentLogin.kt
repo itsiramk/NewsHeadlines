@@ -12,14 +12,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.iram.newsheadlines.R
 import com.iram.newsheadlines.databinding.LayoutLoginBinding
 import com.iram.newsheadlines.utils.autoCleared
 import com.iram.newsheadlines.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -40,38 +41,34 @@ class FragmentLogin : Fragment(), TextWatcher {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
         binding.tvSignUp.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_fragmentLogin_to_fragmentRegistration)
         }
-        initViews()
         binding.btnLogin.setOnClickListener {
             val flag = validateInputFields()
-            if(!flag){
+            if (!flag) {
                 showAlert(getString(R.string.login_failed))
             }
         }
+        getUserDetails()
     }
 
     private fun initViews() {
         binding.pBar.visibility = View.VISIBLE
         binding.tvEmail.addTextChangedListener(this)
         binding.tvPwd.addTextChangedListener(this)
-        loginViewModel.getUserName.asLiveData().observe(viewLifecycleOwner) {
-            userName = it.toString()
-        }
-        loginViewModel.getUserPwd.asLiveData().observe(viewLifecycleOwner) {
-            userPwd = it.toString()
-        }
         binding.pBar.visibility = View.GONE
     }
+
 
     private fun startNewsActivity() {
         val intent = Intent(context, NewsActivity::class.java)
         startActivity(intent)
     }
 
-    private fun validateInputFields():Boolean {
+    private fun validateInputFields(): Boolean {
         var email = binding.tvEmail.text?.trim().toString()
         var pwd = binding.tvPwd.text?.trim().toString()
         if (email.isEmpty()) {
@@ -96,6 +93,20 @@ class FragmentLogin : Fragment(), TextWatcher {
         }
     }
 
+    private fun getUserDetails() {
+
+        lifecycleScope.launch {
+            loginViewModel.doGetUserDetails()
+            loginViewModel.userDetails.collect { users->
+                for (user in users){
+                    userName = user.emailID.toString()
+                    userPwd = user.password.toString()
+                }
+            }
+        }
+
+    }
+
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
     }
 
@@ -108,13 +119,13 @@ class FragmentLogin : Fragment(), TextWatcher {
         validateInputFields()
     }
 
-    private fun showAlert(msg:String){
+    private fun showAlert(msg: String) {
         val alertDialog: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         val inflater = requireActivity().layoutInflater
-        val dialogView:View = inflater.inflate(R.layout.layout_alert, null)
-        alertDialog.setView(dialogView);
-        val tvAlertMsg:TextView = dialogView.findViewById(R.id.tvAlertMessage)
-        val btnOk:Button = dialogView.findViewById(R.id.btnOk)
+        val dialogView: View = inflater.inflate(R.layout.layout_alert, null)
+        alertDialog.setView(dialogView)
+        val tvAlertMsg: TextView = dialogView.findViewById(R.id.tvAlertMessage)
+        val btnOk: Button = dialogView.findViewById(R.id.btnOk)
         tvAlertMsg.text = msg
         val alert: AlertDialog = alertDialog.create()
         btnOk.setOnClickListener {

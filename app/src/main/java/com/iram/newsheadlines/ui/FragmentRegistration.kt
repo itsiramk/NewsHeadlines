@@ -1,5 +1,6 @@
 package com.iram.newsheadlines.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,11 +8,13 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.iram.newsheadlines.R
 import com.iram.newsheadlines.databinding.LayoutSignupBinding
+import com.iram.newsheadlines.db.entity.UserCredentials
 import com.iram.newsheadlines.utils.autoCleared
 import com.iram.newsheadlines.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,9 +65,14 @@ class FragmentRegistration : Fragment(), TextWatcher {
         val loginEmail = binding.tvEmail.text.toString().trim()
         val loginPwd = binding.tvPwd.text.toString().trim()
         val loginConfirmPwd = binding.tvConfirmPwd.text.toString().trim()
+
         if (loginPwd == loginConfirmPwd) {
-            loginViewModel.saveToDataStore(loginEmail, loginPwd)
-            findNavController().navigate(R.id.action_fragmentRegistration_to_fragmentLogin)
+            val user = UserCredentials(1,loginEmail,loginConfirmPwd)
+            loginViewModel.insertUserDetails(user)
+            loginViewModel.response.observe(viewLifecycleOwner){
+                loginViewModel.setSavedKey(true)
+                findNavController().navigate(R.id.action_fragmentRegistration_to_fragmentLogin)
+            }
         } else {
             binding.tilPassword.error = getString(R.string.password_mismatch)
             binding.tilConfirmPassword.error = getString(R.string.password_mismatch)

@@ -11,9 +11,22 @@
         android:layout_width="@dimen/dp_150"
         android:layout_height="@dimen/dp_150"
         android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_100"
         android:background="@drawable/img_googlenews"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/pBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circular_progress_bar"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

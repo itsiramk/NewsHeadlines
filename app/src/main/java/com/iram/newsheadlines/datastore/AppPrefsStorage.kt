@@ -8,6 +8,7 @@ import androidx.datastore.preferences.edit
 import androidx.datastore.preferences.preferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 
@@ -18,22 +19,16 @@ class AppPrefsStorage @Inject constructor(context: Context) {
     )
 
     companion object {
-        val USER_PWD_KEY = preferencesKey<String>("USER_PWD")
-        val USER_NAME_KEY = preferencesKey<String>("USER_NAME")
+        val SAVED_KEY = preferencesKey<Boolean>("saved_key")
     }
 
-    suspend fun storeUser(name: String,pwd:String) {
+    suspend fun setSavedKey(boolean: Boolean) {
         dataStore.edit {
-            it[USER_PWD_KEY] = pwd
-            it[USER_NAME_KEY] = name
+            it[SAVED_KEY] = boolean
         }
     }
 
-    val userPwdFlow: Flow<String> = dataStore.data.map {
-        it[USER_PWD_KEY] ?: ""
-    }
-
-    val userNameFlow: Flow<String> = dataStore.data.map {
-        it[USER_NAME_KEY] ?: ""
+    val savedKey: Flow<Boolean> = dataStore.data.map {
+        it[SAVED_KEY] ?: false
     }
 }
