@@ -35,5 +35,6 @@ API - https://newsapi.org/v2/top-headlines?country=in&apiKey=<ENTER_YOUR_API_KEY
 User can also logout from the app from the options menu.
 
 <img width="402" alt="Screen1" src="https://user-images.githubusercontent.com/16866972/133250822-2336b46d-6ce5-4faa-b0a8-aa52a5072e3f.PNG">
-
+<img width="405" alt="Screen2" src="https://user-images.githubusercontent.com/16866972/133250959-cca00eff-9395-4129-8608-b46eb8a54e6a.PNG">
+<img width="403" alt="Screen3" src="https://user-images.githubusercontent.com/16866972/133250968-74212036-38ae-4b8d-85f1-9042d31ea5f7.PNG">
 
