@@ -1,6 +1,5 @@
 package com.iram.newsheadlines.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,7 +7,6 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -27,10 +25,7 @@ class FragmentRegistration : Fragment(), TextWatcher {
     private val loginViewModel: LoginViewModel by viewModels()
     private var binding: LayoutSignupBinding by autoCleared()
     private val PASSWORD_PATTERN: Pattern = Pattern.compile(
-        "^" +  //"(?=.*[0-9])" +         //at least 1 digit
-                //"(?=.*[a-z])" +         //at least 1 lower case letter
-                //"(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +  //any letter
+        "^" + "(?=.*[a-zA-Z])" +  //any letter
                 "(?=.*[@#$%^&+=])" +  //at least 1 special character
                 "(?=\\S+$)" +  //no white spaces
                 ".{4,}" +  //at least 4 characters
@@ -52,11 +47,11 @@ class FragmentRegistration : Fragment(), TextWatcher {
         binding.tvPwd.addTextChangedListener(this)
         binding.tvConfirmPwd.addTextChangedListener(this)
         binding.btnCreateAccount.setOnClickListener {
-            val emailFlag:Boolean
-            var pwdFlag:Boolean
+            val emailFlag: Boolean
+            var pwdFlag: Boolean
             emailFlag = validateEmail()
             pwdFlag = validatePassword()
-            if(emailFlag && pwdFlag)
+            if (emailFlag && pwdFlag)
                 saveDataInDb()
         }
     }
@@ -67,9 +62,9 @@ class FragmentRegistration : Fragment(), TextWatcher {
         val loginConfirmPwd = binding.tvConfirmPwd.text.toString().trim()
 
         if (loginPwd == loginConfirmPwd) {
-            val user = UserCredentials(1,loginEmail,loginConfirmPwd)
+            val user = UserCredentials(1, loginEmail, loginConfirmPwd)
             loginViewModel.insertUserDetails(user)
-            loginViewModel.response.observe(viewLifecycleOwner){
+            loginViewModel.response.observe(viewLifecycleOwner) {
                 loginViewModel.setSavedKey(true)
                 findNavController().navigate(R.id.action_fragmentRegistration_to_fragmentLogin)
             }
@@ -100,16 +95,16 @@ class FragmentRegistration : Fragment(), TextWatcher {
             binding.tilPassword.error = getString(R.string.empty_field_error)
             binding.tilConfirmPassword.error = getString(R.string.empty_field_error)
             false
-        }else if (passwordInput.isEmpty()) {
+        } else if (passwordInput.isEmpty()) {
             binding.tilPassword.error = getString(R.string.empty_field_error)
             false
         } else if (confirmpasswordInput.isEmpty()) {
             binding.tilConfirmPassword.error = getString(R.string.empty_field_error)
             false
-        }  else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             binding.tilPassword.error = getString(R.string.password_weak_error)
             false
-        }  else if (!PASSWORD_PATTERN.matcher(confirmpasswordInput).matches()) {
+        } else if (!PASSWORD_PATTERN.matcher(confirmpasswordInput).matches()) {
             binding.tilConfirmPassword.error = getString(R.string.password_weak_error)
             false
         } else {
@@ -133,21 +128,20 @@ class FragmentRegistration : Fragment(), TextWatcher {
 
     override fun afterTextChanged(s: Editable?) {
 
-        if (binding.tvPwd.text.hashCode() == s.hashCode())
-        {
+        if (binding.tvPwd.text.hashCode() == s.hashCode()) {
             if (!PASSWORD_PATTERN.matcher(binding.tvPwd.text.toString().trim()).matches()) {
                 binding.tilPassword.error = getString(R.string.password_weak_error)
             }
-        }
-        else if (binding.tvConfirmPwd.text.hashCode() == s.hashCode())
-        {
+        } else if (binding.tvConfirmPwd.text.hashCode() == s.hashCode()) {
             if (!PASSWORD_PATTERN.matcher(binding.tvConfirmPwd.text.toString().trim()).matches()) {
                 binding.tvConfirmPwd.error = getString(R.string.password_weak_error)
             }
-        }
-
-        if (!binding.tvConfirmPwd.text.toString().trim().equals(binding.tvPwd.text.toString().trim())) {
+            if (!binding.tvConfirmPwd.text.toString().trim()
+                    .equals(binding.tvPwd.text.toString().trim())
+            ) {
                 binding.tilConfirmPassword.error = getString(R.string.password_mismatch)
             }
         }
+
     }
+}

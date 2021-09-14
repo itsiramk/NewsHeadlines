@@ -15,7 +15,4 @@ class MainActivity : AppCompatActivity() {
         val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
-    override fun onBackPressed() {
-        finish()
-    }
 }

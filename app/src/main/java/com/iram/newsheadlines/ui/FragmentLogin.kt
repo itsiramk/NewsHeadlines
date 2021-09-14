@@ -61,8 +61,6 @@ class FragmentLogin : Fragment(), TextWatcher {
         binding.tvPwd.addTextChangedListener(this)
         binding.pBar.visibility = View.GONE
     }
-
-
     private fun startNewsActivity() {
         val intent = Intent(context, NewsActivity::class.java)
         startActivity(intent)
@@ -94,17 +92,15 @@ class FragmentLogin : Fragment(), TextWatcher {
     }
 
     private fun getUserDetails() {
-
         lifecycleScope.launch {
             loginViewModel.doGetUserDetails()
-            loginViewModel.userDetails.collect { users->
-                for (user in users){
+            loginViewModel.userDetails.collect { users ->
+                for (user in users) {
                     userName = user.emailID.toString()
                     userPwd = user.password.toString()
                 }
             }
         }
-
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -116,7 +112,8 @@ class FragmentLogin : Fragment(), TextWatcher {
     }
 
     override fun afterTextChanged(s: Editable?) {
-        validateInputFields()
+        if(s.toString().isNotEmpty())
+            validateInputFields()
     }
 
     private fun showAlert(msg: String) {

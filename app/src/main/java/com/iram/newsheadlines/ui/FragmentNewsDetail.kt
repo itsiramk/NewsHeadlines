@@ -4,22 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.iram.newsheadlines.R
-import com.iram.newsheadlines.databinding.LayoutLoginBinding
 import com.iram.newsheadlines.databinding.LayoutNewsdetailsBinding
 import com.iram.newsheadlines.utils.autoCleared
 import com.iram.newsheadlines.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentNewsDetail: Fragment() {
-    private var binding:LayoutNewsdetailsBinding by autoCleared()
+class FragmentNewsDetail : Fragment() {
+    private var binding: LayoutNewsdetailsBinding by autoCleared()
     private val newsViewModel: NewsViewModel by viewModels()
 
     override fun onCreateView(
@@ -37,7 +34,7 @@ class FragmentNewsDetail: Fragment() {
     }
 
     private fun fetchDataFromIntent() {
-        arguments?.getString("title")?.let { fetchDataFromDb(it.toString()) }
+        arguments?.getString("title")?.let { fetchDataFromDb(it) }
     }
 
     fun fetchDataFromDb(title: String) {
@@ -50,10 +47,10 @@ class FragmentNewsDetail: Fragment() {
                 binding.tvNewsDesc.text = news.description
             })
     }
+
     fun loadImage(path: String) {
         Glide.with(requireContext()).load(path)
             .error(R.drawable.img_googlenews)
             .diskCacheStrategy(DiskCacheStrategy.ALL).into(binding.imgNews)
     }
-
 }
