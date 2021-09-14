@@ -34,7 +34,6 @@ API - https://newsapi.org/v2/top-headlines?country=in&apiKey=<ENTER_YOUR_API_KEY
 
 User can also logout from the app from the options menu.
 
-![ScreenShot](registration_validation.png)
-
+![alt text](C:/Users/001ZKW744/Iram/Practice/Android/Github/Screens/registration_validation.png)
 
 
