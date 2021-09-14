@@ -33,3 +33,17 @@ UI - ConstraintLayout
 API - https://newsapi.org/v2/top-headlines?country=in&apiKey=<ENTER_YOUR_API_KEY>
 
 User can also logout from the app from the options menu.
+
+![Optional Text](C:\Users\001ZKW744\Iram\Practice\Android\Github\Screens\registration_validation.png)
+
+![Optional Text](C:\Users\001ZKW744\Iram\Practice\Android\Github\Screens\login_validation.png)
+
+![Optional Text](C:\Users\001ZKW744\Iram\Practice\Android\Github\Screens\news_display1.png)
+
+![Optional Text](C:\Users\001ZKW744\Iram\Practice\Android\Github\Screens\news_display2.png)
+
+![Optional Text](C:\Users\001ZKW744\Iram\Practice\Android\Github\Screens\logout.png)
+
+
+
+
