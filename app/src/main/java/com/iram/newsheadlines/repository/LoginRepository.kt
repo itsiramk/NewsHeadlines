@@ -14,4 +14,8 @@ class LoginRepository @Inject constructor(
     }
 
     val getUserDetails: Flow<List<UserCredentials>> get() = loginDao.getUserDetails()
+
+    suspend fun deleteSingleUserRecord() {
+        loginDao.deleteSingleUserDetails(1)
+    }
 }

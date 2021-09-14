@@ -41,4 +41,10 @@ class LoginViewModel @ViewModelInject constructor(
             appPrefsStorage.setSavedKey(key)
         }
     }
+    fun doDeleteSingleUserRecord(){
+        viewModelScope.launch(Dispatchers.IO) {
+            loginRepository.deleteSingleUserRecord()
+        }
+    }
+
 }
